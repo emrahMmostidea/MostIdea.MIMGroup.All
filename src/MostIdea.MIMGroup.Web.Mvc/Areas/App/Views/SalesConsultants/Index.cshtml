@@ -1,0 +1,59 @@
+﻿@using MostIdea.MIMGroup.Authorization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.SalesConsultants
+@using MostIdea.MIMGroup.Web.Areas.App.Startup
+@model SalesConsultantsViewModel
+@{
+    Layout = null;
+    ViewBag.CurrentPageName = AppPageNames.Common.SalesConsultants;
+}
+
+<script abp-src="/view-resources/Areas/App/Views/SalesConsultants/Index.js" asp-append-version="true"></script>
+
+
+<div class="content d-flex flex-column flex-column-fluid">
+
+    <abp-page-subheader title='@L("SalesConsultants")' description='@L("SalesConsultantsHeaderInfo")'>
+        <button id="ExportToExcelButton" class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i class="fa fa-file-excel"></i> @L("ExportToExcel")</button>
+
+        @if (IsGranted(AppPermissions.Pages_SalesConsultants_Create))
+        {
+            <button id="CreateNewSalesConsultantButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewSalesConsultant")</button>
+        }
+    </abp-page-subheader>
+
+    <div class="@(await GetContainerClass())">
+        <input type="hidden" id="salesConsultantId" value="@Model.SalesConsultantId" />
+        <div class="card card-custom gutter-b"> 
+            <div class="card-body">
+                <div class="form">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-xl-12">
+
+                            <div class="form-group align-items-center">
+                                <div class="input-group">
+                                    <input type="text" id="SalesConsultantsTableFilter" class="form-control m-input" placeholder='@L("SearchWithThreeDot")' value="@Model.FilterText">
+                                    <span class="input-group-btn">
+                                        <button id="GetSalesConsultantsButton" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <table id="SalesConsultantsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                        <tr>
+                            <th></th>
+
+                            <th>@L("Actions")</th>
+                            <th>@L("UserName")</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

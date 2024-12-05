@@ -1,0 +1,216 @@
+﻿
+@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Hospitals
+@model CreateOrEditHospitalModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditHospital")) : L("CreateNewHospital")))
+
+
+
+
+<div class="modal-body">
+    <div id="HospitalInformationsTab">
+        <form name="HospitalInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+<input type="hidden" id="id" name="id" value="@Model.Hospital.Id" />}
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="hospitalGroupId">@L("HospitalGroup")</label>
+                                @Html.DropDownList("hospitalGroupId", new SelectList(Model.HospitalHospitalGroupList, "Id", "DisplayName", (Model.IsEditMode ? Model.Hospital.HospitalGroupId.ToString() : "")), @L("SelectAHospitalGroup"), new { @class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Hospital_Name">@L("Name")</label>
+                                <input class="form-control" id="Hospital_Name" value="@Model.Hospital.Name" type="text" name="name" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Hospital_TaxAdministration">@L("TaxAdministration")</label>
+                                <input class="form-control" id="Hospital_TaxAdministration" value="@Model.Hospital.TaxAdministration" type="text" name="taxAdministration" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Hospital_TaxNumber">@L("TaxNumber")</label>
+                                <input class="form-control" id="Hospital_TaxNumber" value="@Model.Hospital.TaxNumber" type="text" name="taxNumber" required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+
+                </div>
+            </div>
+            
+
+            <div class="row">
+                <div class="col-md-12">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link tab-link active" id="nav-doctors-tab" data-bs-toggle="tab" data-bs-target="doctors" type="button" role="tab" aria-selected="true">@L("HospitalVsUsers")</button>
+                            <button class="nav-link tab-link" id="nav-address-tab" data-bs-toggle="tab" data-bs-target="address" type="button" role="tab" aria-selected="false">@L("AddressInformations")</button>
+                            <button class="nav-link tab-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="location" type="button" role="tab" aria-selected="false">@L("Location")</button>
+                        </div>
+                    </nav>
+                    <div id="nav-tabContent">
+                        <div id="tab-content" class="tab-content" role="tabpanel"></div>
+                        <div id="tab-location" class="tab-content" style="display: none">
+                            <input class="form-control" id="Hospital_Coordinate" value="@Model.Hospital.Coordinate" type="hidden" name="coordinate" />
+
+                            <div id="map" style="height:500px"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+        </form>
+    </div>
+</div>
+
+<script>
+    $('.nav-link')[0].click()
+</script>
+
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvyFgbFhWFxmz8frDHkGkqmHI2filewkQ&callback=initMap&v=weekly&channel=2"
+        async></script>
+<script>
+
+
+
+
+    function initMap() {
+        var coordinate = $("#Hospital_Coordinate").val();
+        var lng = parseFloat(coordinate.split(',')[0]);
+        var lat = parseFloat(coordinate.split(',')[1]);
+
+        var map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 12,
+            center: { lng: lng, lat: lat },
+            styles: [
+                { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+                { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+                { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+                {
+                    featureType: "administrative.locality",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#d59563" }],
+                },
+                {
+                    featureType: "poi",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#d59563" }],
+                },
+                {
+                    featureType: "poi.park",
+                    elementType: "geometry",
+                    stylers: [{ color: "#263c3f" }],
+                },
+                {
+                    featureType: "poi.park",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#6b9a76" }],
+                },
+                {
+                    featureType: "road",
+                    elementType: "geometry",
+                    stylers: [{ color: "#38414e" }],
+                },
+                {
+                    featureType: "road",
+                    elementType: "geometry.stroke",
+                    stylers: [{ color: "#212a37" }],
+                },
+                {
+                    featureType: "road",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#9ca5b3" }],
+                },
+                {
+                    featureType: "road.highway",
+                    elementType: "geometry",
+                    stylers: [{ color: "#746855" }],
+                },
+                {
+                    featureType: "road.highway",
+                    elementType: "geometry.stroke",
+                    stylers: [{ color: "#1f2835" }],
+                },
+                {
+                    featureType: "road.highway",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#f3d19c" }],
+                },
+                {
+                    featureType: "transit",
+                    elementType: "geometry",
+                    stylers: [{ color: "#2f3948" }],
+                },
+                {
+                    featureType: "transit.station",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#d59563" }],
+                },
+                {
+                    featureType: "water",
+                    elementType: "geometry",
+                    stylers: [{ color: "#17263c" }],
+                },
+                {
+                    featureType: "water",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#515c6d" }],
+                },
+                {
+                    featureType: "water",
+                    elementType: "labels.text.stroke",
+                    stylers: [{ color: "#17263c" }],
+                },
+            ],
+        });
+
+
+        var marker = new google.maps.Marker({
+            position: { lng: lng, lat: lat },
+            map,
+            title: 'Konum',
+            draggable: true,
+            // icon: 'http://takip.triomobil.com/images/license_plates/' + result[i].license_plate + '.16px.png',
+        });
+
+        marker.setMap(map);
+
+        marker.addListener('drag', handleEvent);
+        marker.addListener('dragend', handleEvent);
+
+    }
+
+    function handleEvent(event) {
+        $("#Hospital_Coordinate").val(event.latLng.lng() + ',' + event.latLng.lat());
+    }
+</script>
+
+
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

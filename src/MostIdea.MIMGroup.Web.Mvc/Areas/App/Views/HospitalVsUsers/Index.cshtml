@@ -1,0 +1,39 @@
+﻿@using MostIdea.MIMGroup.Authorization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.HospitalVsUsers
+@using MostIdea.MIMGroup.Web.Areas.App.Startup
+@model HospitalVsUsersViewModel
+@{ ViewBag.CurrentPageName = AppPageNames.Common.HospitalVsUsers; }
+@{ Layout = null; }
+<script abp-src="/view-resources/Areas/App/Views/HospitalVsUsers/Index.js" asp-append-version="true"></script>
+
+<div class="content d-flex flex-column flex-column-fluid">
+    
+    <input type="hidden" id="HospitalId" value="@Model.HospitalId.Value"/>
+    <abp-page-subheader title="@L("HospitalVsUsers")" description="@L("HospitalVsUsersHeaderInfo")">
+            
+        @if (IsGranted(AppPermissions.Pages_HospitalVsUsers_Create))
+        {
+<button id="CreateNewHospitalVsUserButton" class="btn btn-sm btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewHospitalVsUser")</button>}
+    </abp-page-subheader>
+
+    <div class="@(await GetContainerClass())">
+        <div class="card card-custom gutter-b">
+            <div class="card-body"> 
+                <div class="row align-items-center">
+                    <table id="HospitalVsUsersTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                        <tr>
+                            <th></th>
+
+                            <th>@L("Actions")</th>
+                            <th>@L("HospitalName")</th>
+                            <th>@L("UserName")</th>
+
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

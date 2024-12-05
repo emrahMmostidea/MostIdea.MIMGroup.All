@@ -1,0 +1,53 @@
+﻿
+@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.AddressInformations
+@model CreateOrEditAddressInformationModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditAddressInformation")) : L("CreateNewAddressInformation")))
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/AddressInformations/Index.js" asp-append-version="true"></script>
+}
+
+<div class="modal-body">
+    <div id="AddressInformationInformationsTab">
+        <div class="row">
+            <div class="col-md-12">
+                <form name="AddressInformationInformationsForm" role="form" novalidate class="form-validation">
+
+                    <input type="hidden" name="hospitalId" id="hospitalId" value="" />
+
+                    @if (Model.IsEditMode)
+                    {
+        <input type="hidden" name="id" value="@Model.AddressInformation.Id" />
+                        <input type="hidden" name="hospitalId" value="@Model.AddressInformation.Id" />}
+
+                    <div class="form-group">
+                        <label for="AddressInformation_Name">@L("Name")</label>
+                        <input class="form-control" id="AddressInformation_Name" value="@Model.AddressInformation.Name" type="text" name="name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="AddressInformation_Address">@L("Address")</label>
+                        <textarea class="form-control" id="AddressInformation_Address" name="address" required maxlength="@MostIdea.MIMGroup.B2B.AddressInformationConsts.MaxAddressLength" minlength="@MostIdea.MIMGroup.B2B.AddressInformationConsts.MinAddressLength">@Model.AddressInformation.Address</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="AddressInformation_Phone">@L("Phone")</label>
+                        <input class="form-control" id="AddressInformation_Phone" value="@Model.AddressInformation.Phone" type="text" name="phone" required maxlength="@MostIdea.MIMGroup.B2B.AddressInformationConsts.MaxPhoneLength" minlength="@MostIdea.MIMGroup.B2B.AddressInformationConsts.MinPhoneLength" />
+                    </div>
+
+                </form>
+            </div>
+        </div>  
+    </div>
+</div>
+
+
+<script>
+    $("#hospitalId").val($("#HospitalId").val());
+</script>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

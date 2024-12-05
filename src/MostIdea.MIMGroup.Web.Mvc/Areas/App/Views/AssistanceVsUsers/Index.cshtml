@@ -1,0 +1,41 @@
+﻿@using MostIdea.MIMGroup.Authorization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.AssistanceVsUsers
+@using MostIdea.MIMGroup.Web.Areas.App.Startup
+@model AssistanceVsUsersViewModel
+@{
+    Layout = null;
+    ViewBag.CurrentPageName = AppPageNames.Common.AssistanceVsUsers;
+}
+
+<script abp-src="/view-resources/Areas/App/Views/AssistanceVsUsers/Index.js" asp-append-version="true"></script>
+
+
+<div class="content d-flex flex-column flex-column-fluid">
+    <abp-page-subheader title='@L("AssistanceVsUsers")' description='@L("AssistanceVsUsersHeaderInfo")'>
+        @if (IsGranted(AppPermissions.Pages_AssistanceVsUsers_Create))
+        {
+            <button id="CreateNewAssistanceVsUserButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewAssistanceVsUser")</button>
+        }
+    </abp-page-subheader>
+    <div class="@(await GetContainerClass())">
+     
+        <input type="hidden" id="doctorId" value="@Model.DoctorId" />
+        
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <table id="AssistanceVsUsersTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th></th>
+
+                                <th>@L("Actions")</th> 
+                                <th>@L("Assistance")</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

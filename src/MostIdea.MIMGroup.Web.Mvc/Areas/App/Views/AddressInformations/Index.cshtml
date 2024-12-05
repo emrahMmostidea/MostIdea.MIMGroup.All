@@ -1,0 +1,41 @@
+﻿@using MostIdea.MIMGroup.Authorization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.AddressInformations
+@using MostIdea.MIMGroup.Web.Areas.App.Startup
+@model AddressInformationsViewModel
+@{
+ViewBag.CurrentPageName = AppPageNames.Common.AddressInformations;
+}
+@{ Layout = null;}
+<script abp-src="/view-resources/Areas/App/Views/AddressInformations/Index.js" asp-append-version="true"></script>
+
+
+<div class="content d-flex flex-column flex-column-fluid">
+    <input type="hidden" id="HospitalId" value ="@Model.HospitalId.Value" />
+
+    <abp-page-subheader title="@L("AddressInformations")" description="@L("AddressInformationsHeaderInfo")"> 
+
+        @if (IsGranted(AppPermissions.Pages_AddressInformations_Create))
+        {
+        <button id="CreateNewAddressInformationButton" class="btn btn-primary btn-sm blue"><i class="fa fa-plus"></i> @L("CreateNewAddressInformation")</button>
+        }
+    </abp-page-subheader> 
+    <div class="@(await GetContainerClass())">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <table id="AddressInformationsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th></th>
+
+                                <th>@L("Actions")</th>
+                                <th>@L("Name")</th>
+
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

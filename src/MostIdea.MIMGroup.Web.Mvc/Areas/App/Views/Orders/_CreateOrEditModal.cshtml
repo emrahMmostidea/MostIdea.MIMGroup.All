@@ -1,0 +1,222 @@
+﻿<link href="~/view-resources/Areas/App/Views/Orders/_CreateOrEditModal.css" rel="stylesheet" asp-append-version="true" />
+@section Scripts{
+<script src="~/view-resources/Areas/App/Views/Orders/_CreateOrEditModal.min.js" asp-append-version="true"></script>
+}
+
+@model MostIdea.MIMGroup.B2B.Dtos.OrderDto
+
+<div id="order_detail" class="container-xxl mt-10">
+    <form id="order_detail_form" class="form">
+        <input type="hidden" id="orderId" name="orderId" value="@Model.Id" />
+        <input type="hidden" id="orderNo" name="orderNo" value="@Model.OrderNo" />
+        <div class="row">
+            <div class="col-md-12" style="">
+                <div class="card card-flush py-4" style="padding: 15px;">
+                    <div class="col-md-12">
+                        <div class="row g-9">
+                            <div class="col-md-4 col-lg-12 col-xxl-4">
+                                <label class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6 order-type active">
+                                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                                        <input class="form-check-input orderType" type="radio" name="usage" value="1" checked="checked">
+                                    </span>
+                                    <span class="ms-5">
+                                        <span class="fs-4 fw-bolder mb-1 d-block">Sipariş</span>
+                                        <span class="fw-bold fs-7 text-gray-600">Yeni sipariş açıklama metini</span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-md-4 col-lg-12 col-xxl-4">
+                                <label class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6 order-type">
+                                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                                        <input class="form-check-input orderType" type="radio" name="usage" value="2">
+                                    </span>
+                                    <span class="ms-5">
+                                        <span class="fs-4 fw-bolder mb-1 d-block">Konsinye Ürün</span>
+                                        <span class="fw-bold fs-7 text-gray-600">Konsiye depodan ürün siparişi</span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-md-4 col-lg-12 col-xxl-4">
+                                <label class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6 order-type">
+                                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                                        <input class="form-check-input orderType" type="radio" name="usage" value="3">
+                                    </span>
+                                    <span class="ms-5">
+                                        <span class="fs-4 fw-bolder mb-1 d-block">Konsiye Tamamlama</span>
+                                        <span class="fw-bold fs-7 text-gray-600">Konsiye depoya ürün siparişi</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 15px;" id="patientInfo">
+            <div class="col-md-12">
+                <div class="card card-flush py-4">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h2>Hasta Bilgileri</h2>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="d-flex flex-column gap-5 gap-md-7">
+                            <div class="d-flex flex-column flex-md-row gap-5">
+                                <div class="fv-row flex-row-fluid fv-plugins-icon-container">
+                                    <label class="required form-label">Adı</label>
+                                    <input class="form-control" name="billing_order_address_1" id="patientName" placeholder="" value="" required>
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                                <div class="flex-row-fluid">
+                                    <label class="form-label">Soyadı</label>
+                                    <input class="form-control" name="billing_order_address_2" id="patientSurname" placeholder="" required>
+                                </div>
+                                <div class="flex-row-fluid">
+                                    <label class="form-label">Operasyon Tarihi</label>
+                                    <input class="form-control date-picker" name="operationTime" id="operationTime" placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="d-none d-flex flex-column gap-5 gap-md-7" id="kt_ecommerce_edit_order_shipping_form" wfd-invisible="true">
+                                <div class="fs-3 fw-bolder mb-n2">Adres Bilgileri 
+                                    <button type="button" class="btn btn-secondary btn-sm float-right" id="addAddressInformation">
+                                        <i class="fa fa-plus "></i> @L("CreateNewAddressInformation")
+                                    </button>
+                                    </div>
+                                <div class="d-flex flex-column flex-md-row gap-5">
+                                    <div class="fv-row flex-row-fluid">
+                                        <label class="form-label">Teslimat Adresi</label>
+                                        <div id="deliveryAddress" required></div>
+                                    </div>
+                                    <div class="flex-row-fluid">
+                                        <label class="form-label">Fatura Adresi</label>
+                                        <div id="invoiceAddress" required></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-md-12">
+                <div class="card card-flush py-4">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h2>Ürünler</h2>
+                        </div>
+                        <div class="mb-10">
+                            <div class="form-check form-switch form-check-custom form-check-solid" style="background: #f0f0f0; padding: 10px; border-radius: 10px; font-weight: 500;">
+                                <input class="form-check-input" type="checkbox" value="" id="addDouble" />
+                                <label class="form-check-label" for="flexSwitchDefault" style=margin-left:50px;>
+                                    Tek / Çift
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="card-body pt-0">
+                        <ul class="nav nav-stretch nav-tabs nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder" id="categories">
+                        </ul>
+                        <div class="row row-cols-1 row-cols-xl-3 row-cols-md-2 border border-dashed rounded pt-3 pb-1 px-2 mb-5 mh-300px overflow-scroll" id="products">
+                        </div>
+                    </div>
+                    <!--end::Card header-->
+                </div>
+                <!--end::Order details-->
+            </div>
+        </div>
+
+        <div row="row" style="margin: 15px -10px 0 -10px;">
+            <div class="col-md-12">
+                <!--begin::Order details-->
+                <div class="card card-flush py-4">
+                    <!--begin::Card header-->
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h2>Sipariş No: #@Model.OrderNo</h2>
+                        </div>
+                    </div>
+                    <!--end::Card header-->
+                    <!--begin::Card body-->
+                    <div class="card-body pt-0">
+                        <div id="productsGrid"></div>
+                    </div>
+                    <!--end::Card body-->
+                </div>
+                <!--end::Order details-->
+                <!--begin::Order details-->
+                <!--end::Order details-->
+            </div>
+        </div>
+    </form>
+
+    <div class="row" style="margin:15px -10px 0 -10px">
+        <div class="col-md-12">
+            <div id="orderHistory"></div>
+            
+
+            <div class="card card-flush py-4">
+                <div class="card-body pb-0">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="d-flex align-items-center flex-grow-1">
+                            <div class="symbol symbol-45px me-5">
+                                <img src="/metronic8/demo1/assets/media/avatars/300-21.jpg" alt="">
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a href="#" class="text-gray-900 text-hover-primary fs-6 fw-bolder">Carles Nilson</a>
+                                <span class="text-gray-400 fw-bold">Yestarday at 5:06 PM</span>
+                            </div>
+                        </div>
+                        <div class="my-0">
+                            <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                <span class="svg-icon svg-icon-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="5" y="5" width="5" height="5" rx="1" fill="currentColor"></rect>
+                                            <rect x="14" y="5" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
+                                            <rect x="5" y="14" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
+                                            <rect x="14" y="14" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mb-7">
+                        <div class="text-gray-800 mb-5">Outlines keep you honest. They stop you from indulging in poorly thought-out metaphors about driving and keep you focused on the overall structure of your post</div>
+                    </div>
+                   
+                    <div class="separator mb-4"></div>
+                    <form class="position-relative mb-6">
+                        <textarea class="form-control border-0 p-0 pe-10 resize-none min-h-25px" data-kt-autosize="true" rows="1" placeholder="Reply.." style="overflow: hidden; overflow-wrap: break-word; height: 25px;"></textarea>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 15px;">
+        <div class="col-md-12">
+            <div class="card card-flush py-4">
+                <div class="card-body pt-0">
+                    <div class="row">
+                        <div class="col-md-3 offset-md-9">
+                            <button type="button" class="btn btn-success" id="saveBtn"> Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Card header-->
+            </div>
+            <!--end::Order details-->
+        </div>
+    </div>
+
+
+
+    <!--end::Form-->
+</div>
+<!--end::Container-->

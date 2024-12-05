@@ -1,0 +1,43 @@
+﻿
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Products
+@model ProductViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="ProductInformationsTab">
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Name") :</h6>
+                @Model.Product.Name
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Description") :</h6>
+                @Model.Product.Description
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Price") :</h6>
+                @Model.Product.Price
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Quantity") :</h6>
+                @Model.Product.Quantity
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("ProductCategory")) @L("Name") :</h6>
+                @Model.ProductCategoryName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("TaxRate")) @L("Name") :</h6>
+                @Model.TaxRateName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")

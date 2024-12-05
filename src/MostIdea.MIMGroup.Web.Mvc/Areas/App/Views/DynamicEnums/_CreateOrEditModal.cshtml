@@ -1,0 +1,59 @@
+﻿@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.DynamicEnums
+@model CreateOrEditDynamicEnumModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditDynamicEnum")) : L("CreateNewDynamicEnum")))
+
+<div class="modal-body">
+    <div id="DynamicEnumInformationsTab">
+        <form name="DynamicEnumInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" id="enumId" name="id" value="@Model.DynamicEnum.Id" />
+            }
+
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label for="DynamicEnum_Name">@L("Name")</label>
+                        <input class="form-control" id="DynamicEnum_Name" value="@Model.DynamicEnum.Name" type="text" name="name" required />
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label for="dynamicEnumId">@L("EnumFile")</label>
+                            @Html.DropDownList("EnumFile", 
+                                new SelectList(Model.Enums,"Id","Name", (Model.IsEditMode ? Model.DynamicEnum.EnumFile.ToString() : "")),
+                                @L("SelectADynamicEnum"),
+                        new { @class = "form-control"  , @required="required", @id="enumFile" })
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="DynamicEnum_Description">@L("Description")</label>
+                        <textarea class="form-control" id="DynamicEnum_Description" type="text" name="description">@Model.DynamicEnum.Description</textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="EnumItemsTree"></div>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+ 

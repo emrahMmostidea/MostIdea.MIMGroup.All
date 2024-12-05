@@ -1,0 +1,54 @@
+﻿
+@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.DynamicEnumItems
+@model CreateOrEditDynamicEnumItemModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditDynamicEnumItem")) : L("CreateNewDynamicEnumItem")))
+
+<div class="modal-body">
+        <div id="DynamicEnumItemInformationsTab">
+            <form name="DynamicEnumItemInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.DynamicEnumItem.Id" />
+                }
+
+				            
+						<div class="form-group">
+							<label for="dynamicEnumId">@L("DynamicEnum")</label>
+							@Html.DropDownList("dynamicEnumId", new SelectList(Model.DynamicEnumItemDynamicEnumList,"Id","DisplayName", (Model.IsEditMode ? Model.DynamicEnumItem.DynamicEnumId.ToString() : "")),@L("SelectADynamicEnum"), new { @class = "form-control"  , @required="required" })
+						</div>
+
+
+				
+								<div class="form-group">
+									<label for="DynamicEnumItem_EnumValue">@L("EnumValue")</label>
+									<input class="form-control" id="DynamicEnumItem_EnumValue" value="@Model.DynamicEnumItem.EnumValue" type="text" name="enumValue"  required    />
+								</div>
+					
+								<div class="form-group">
+									<label for="DynamicEnumItem_ParentId">@L("ParentId")</label>
+									<input class="form-control" id="DynamicEnumItem_ParentId" value="@Model.DynamicEnumItem.ParentId" type="text" name="parentId"     />
+								</div>
+					
+								<div class="m-checkbox-list">
+									<label for="DynamicEnumItem_IsAuthRestriction" class="kt-checkbox">
+										<input id="DynamicEnumItem_IsAuthRestriction" type="checkbox" name="isAuthRestriction" value="true" @Html.Raw(Model.DynamicEnumItem.IsAuthRestriction ?"checked=\"checked\"":"") />
+										@L("IsAuthRestriction")
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="DynamicEnumItem_AuthorizedUsers">@L("AuthorizedUsers")</label>
+									<input class="form-control" id="DynamicEnumItem_AuthorizedUsers" value="@Model.DynamicEnumItem.AuthorizedUsers" type="text" name="authorizedUsers"  required    />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

@@ -1,0 +1,27 @@
+﻿
+@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.HospitalGroups
+@model CreateOrEditHospitalGroupModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditHospitalGroup")) : L("CreateNewHospitalGroup")))
+
+<div class="modal-body">
+    <div id="HospitalGroupInformationsTab">
+        <form name="HospitalGroupInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.HospitalGroup.Id" />
+            }
+
+            <div class="form-group">
+                <label for="HospitalGroup_Name">@L("Name")</label>
+                <input class="form-control" id="HospitalGroup_Name" value="@Model.HospitalGroup.Name" type="text" name="name" required />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

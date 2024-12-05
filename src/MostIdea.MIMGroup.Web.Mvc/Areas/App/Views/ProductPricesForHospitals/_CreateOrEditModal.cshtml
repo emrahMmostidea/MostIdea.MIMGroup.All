@@ -1,0 +1,47 @@
+﻿
+@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.ProductPricesForHospitals
+@model CreateOrEditProductPricesForHospitalModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditProductPricesForHospital")) : L("CreateNewProductPricesForHospital")))
+
+<div class="modal-body">
+    <div id="ProductPricesForHospitalInformationsTab">
+        <form name="ProductPricesForHospitalInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.ProductPricesForHospital.Id" />
+            }
+
+            <div class="form-group">
+                <label for="productId">@L("Product")</label>
+                @Html.DropDownList("productId", new SelectList(Model.ProductPricesForHospitalProductList,"Id","DisplayName", (Model.IsEditMode ? Model.ProductPricesForHospital.ProductId.ToString() : "")),@L("SelectAProduct"), new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label for="productCategoryId">@L("ProductCategory")</label>
+                @Html.DropDownList("productCategoryId", new SelectList(Model.ProductPricesForHospitalProductCategoryList,"Id","DisplayName", (Model.IsEditMode ? Model.ProductPricesForHospital.ProductCategoryId.ToString() : "")),@L("SelectAProductCategory"), new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label for="ProductPricesForHospital_StartDate">@L("StartDate")</label>
+                <input class="form-control m-input date-picker" id="ProductPricesForHospital_StartDate" type="text" name="startDate" value="@Model.ProductPricesForHospital.StartDate" />
+            </div>
+
+            <div class="form-group">
+                <label for="ProductPricesForHospital_EndDate">@L("EndDate")</label>
+                <input class="form-control m-input date-picker" id="ProductPricesForHospital_EndDate" type="text" name="endDate" value="@Model.ProductPricesForHospital.EndDate" />
+            </div>
+
+            <div class="form-group">
+                <label for="ProductPricesForHospital_Price">@L("Price")</label>
+                <input class="form-control m-input" id="ProductPricesForHospital_Price" value="@Model.ProductPricesForHospital.Price.ToString(CultureInfo.InvariantCulture)" type="number" name="price" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

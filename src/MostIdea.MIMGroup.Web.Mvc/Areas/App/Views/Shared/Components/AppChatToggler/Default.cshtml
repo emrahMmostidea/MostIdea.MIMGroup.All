@@ -1,0 +1,28 @@
+﻿@using Abp.MultiTenancy
+@using MostIdea.MIMGroup.Features
+@model MostIdea.MIMGroup.Web.Areas.App.Models.Layout.ChatTogglerViewModel
+@{
+    var isChatEnabled = (AbpSession.MultiTenancySide == MultiTenancySides.Host || IsFeatureEnabled(AppFeatures.ChatFeature));
+}
+@if (isChatEnabled)
+{
+    <div id="chat_is_connecting_icon" class="topbar-item">
+        <button class="@Model.CssClass">
+            <img src="@(ApplicationPath)Common/Images/loading.gif" style="width: 23px;" tooltip="@L("ChatIsConnecting")" placement="left"/>
+        </button>
+    </div>
+    <div id="kt_quick_sidebar_toggle" class="topbar-item d-none">
+        <button class="@Model.CssClass" style="width: 150px; border: 2px solid; ">
+            <div id="chatIconUnRead" class="d-none">
+                <i class="flaticon-chat-2 unread-notification"></i>
+                <span class="label label-warning unread-chat-message-count">
+                    {{unreadChatMessageCount}}
+                </span>
+            </div>
+            <div id="chatIcon">
+                <i class="flaticon-chat-2"></i>
+                @L("FastOrder")
+            </div>
+        </button>
+    </div>
+}

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root Type="DevExpress.CodeRush.Foundation.Markers.SolutionBookmarksContainer">
+  <Options Language="Neutral">
+    <Items>
+      <Item Id="{b1323643-7469-490e-81ec-a896c93dcbd0}">
+        <Id>3</Id>
+        <File>MIMGroup\src\MostIdea.MIMGroup.Web.Mvc\wwwroot\view-resources\Areas\App\Views\Orders\Index.min.js</File>
+        <Line>77</Line>
+        <Character>38</Character>
+        <ViewportTop>88</ViewportTop>
+        <ViewportTopMax>250</ViewportTopMax>
+        <TopLine>88</TopLine>
+      </Item>
+    </Items>
+  </Options>
+</Root>

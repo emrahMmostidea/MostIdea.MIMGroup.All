@@ -1,0 +1,37 @@
+﻿
+@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Warehouses
+@model CreateOrEditWarehouseModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditWarehouse")) : L("CreateNewWarehouse")))
+
+<div class="modal-body">
+    <div id="WarehouseInformationsTab">
+        <form name="WarehouseInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.Warehouse.Id" />
+            }
+
+            <div class="form-group">
+                <label for="districtId">@L("District")</label>
+                @Html.DropDownList("districtId", new SelectList(Model.WarehouseDistrictList,"Id","DisplayName", (Model.IsEditMode ? Model.Warehouse.DistrictId.ToString() : "")),@L("SelectADistrict"), new { @class = "form-control" , @required="required" })
+            </div>
+
+            <div class="form-group">
+                <label for="Warehouse_Name">@L("Name")</label>
+                <input class="form-control" id="Warehouse_Name" value="@Model.Warehouse.Name" type="text" name="name" required maxlength="@MostIdea.MIMGroup.B2B.WarehouseConsts.MaxNameLength" minlength="@MostIdea.MIMGroup.B2B.WarehouseConsts.MinNameLength" />
+            </div>
+
+            <div class="form-group">
+                <label for="Warehouse_Coordinate">@L("Coordinate")</label>
+                <input class="form-control" id="Warehouse_Coordinate" value="@Model.Warehouse.Coordinate" type="text" name="coordinate" required maxlength="@MostIdea.MIMGroup.B2B.WarehouseConsts.MaxCoordinateLength" minlength="@MostIdea.MIMGroup.B2B.WarehouseConsts.MinCoordinateLength" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

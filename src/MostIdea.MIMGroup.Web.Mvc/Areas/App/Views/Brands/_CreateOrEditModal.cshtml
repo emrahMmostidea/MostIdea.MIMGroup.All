@@ -1,0 +1,32 @@
+﻿
+@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Brands
+@model CreateOrEditBrandModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditBrand")) : L("CreateNewBrand")))
+
+<div class="modal-body">
+    <div id="BrandInformationsTab">
+        <form name="BrandInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.Brand.Id" />
+            }
+
+            <div class="form-group">
+                <label for="Brand_Name">@L("Name")</label>
+                <input class="form-control" id="Brand_Name" value="@Model.Brand.Name" type="text" name="name" required maxlength="@MostIdea.MIMGroup.B2B.BrandConsts.MaxNameLength" minlength="@MostIdea.MIMGroup.B2B.BrandConsts.MinNameLength" />
+            </div>
+
+            <div class="form-group">
+                <label for="Brand_Description">@L("Description")</label>
+                <input class="form-control" id="Brand_Description" value="@Model.Brand.Description" type="text" name="description" required maxlength="@MostIdea.MIMGroup.B2B.BrandConsts.MaxDescriptionLength" minlength="@MostIdea.MIMGroup.B2B.BrandConsts.MinDescriptionLength" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

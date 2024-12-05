@@ -1,0 +1,160 @@
+﻿@using MostIdea.MIMGroup.Authorization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Cities
+@using MostIdea.MIMGroup.Web.Areas.App.Startup
+@model CitiesViewModel
+@{ ViewBag.CurrentPageName = AppPageNames.Common.Vehicles; }
+
+<div class="content d-flex flex-column flex-column-fluid" style="overflow:hidden"> 
+   
+    <div id="map" style="height: 80vh;"></div>
+    <div id="sidebar"></div>
+</div>
+
+@section Scripts{
+    
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvyFgbFhWFxmz8frDHkGkqmHI2filewkQ&callback=initMap&v=weekly&channel=2"
+        async
+    ></script> 
+    <script>
+
+        
+
+
+        function initMap() {
+            var coordinates = [];
+            var vehicles = [];
+            
+            var _vehiclesAppService = abp.services.app.vehicles;
+
+
+
+            var map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: {lng:29.0, lat:41.00},
+                styles: [
+                    { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+                    { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+                    { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+                    {
+                        featureType: "administrative.locality",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#d59563" }],
+                    },
+                    {
+                        featureType: "poi",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#d59563" }],
+                    },
+                    {
+                        featureType: "poi.park",
+                        elementType: "geometry",
+                        stylers: [{ color: "#263c3f" }],
+                    },
+                    {
+                        featureType: "poi.park",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#6b9a76" }],
+                    },
+                    {
+                        featureType: "road",
+                        elementType: "geometry",
+                        stylers: [{ color: "#38414e" }],
+                    },
+                    {
+                        featureType: "road",
+                        elementType: "geometry.stroke",
+                        stylers: [{ color: "#212a37" }],
+                    },
+                    {
+                        featureType: "road",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#9ca5b3" }],
+                    },
+                    {
+                        featureType: "road.highway",
+                        elementType: "geometry",
+                        stylers: [{ color: "#746855" }],
+                    },
+                    {
+                        featureType: "road.highway",
+                        elementType: "geometry.stroke",
+                        stylers: [{ color: "#1f2835" }],
+                    },
+                    {
+                        featureType: "road.highway",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#f3d19c" }],
+                    },
+                    {
+                        featureType: "transit",
+                        elementType: "geometry",
+                        stylers: [{ color: "#2f3948" }],
+                    },
+                    {
+                        featureType: "transit.station",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#d59563" }],
+                    },
+                    {
+                        featureType: "water",
+                        elementType: "geometry",
+                        stylers: [{ color: "#17263c" }],
+                    },
+                    {
+                        featureType: "water",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#515c6d" }],
+                    },
+                    {
+                        featureType: "water",
+                        elementType: "labels.text.stroke",
+                        stylers: [{ color: "#17263c" }],
+                    },
+                ],
+            });
+
+            _vehiclesAppService.getAllPositions().then(result => {
+                vehicles = result;
+                for (var i = 0; i < result.length; i++) { 
+                    coordinates.push({ lng: result[i].longitude, lat: result[i].latitude });
+
+                    var marker = new google.maps.Marker({
+                        position: { lng: result[i].longitude, lat: result[i].latitude },
+                        map,
+                        title: result[i].license_plate,
+                        icon: 'http://takip.triomobil.com/images/license_plates/' + result[i].license_plate + '.16px.png',
+                        
+                    });
+                     
+                    //marker.addListener("click", (e) => {
+                    //    console.log(marker);
+                    //    map.setZoom(20);
+                    //    map.setCenter(marker.getPosition()); 
+                    //    var vehicle = vehicles.find(x => x.license_plate == marker.title);
+                    //    abp.message.info('KM:'+vehicle.mileage, vehicle.license_plate);
+
+
+                    //});
+
+                    marker.setMap(map);
+
+
+                    var content = "KM: " + result[i].mileage + '<br>' + "Adres: " + result[i].address;
+
+                    var infowindow = new google.maps.InfoWindow();
+
+                    google.maps.event.addListener(marker, 'click', (function(marker, content, infowindow) {
+                        return function() {
+                            infowindow.setContent(content);
+                            infowindow.open(map, marker);
+                        };
+                    })(marker, content, infowindow));
+                }
+
+                 
+            });
+        }
+    </script>
+}
+ 

@@ -1,0 +1,105 @@
+﻿@using MostIdea.MIMGroup.Authorization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.DynamicEnumItems
+@using MostIdea.MIMGroup.Web.Areas.App.Startup
+@model DynamicEnumItemsViewModel
+@{
+    ViewBag.CurrentPageName = AppPageNames.Common.DynamicEnumItems;
+}
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/DynamicEnumItems/Index.js" asp-append-version="true"></script>
+}
+
+<div class="content d-flex flex-column flex-column-fluid">
+
+                <abp-page-subheader title="@L("DynamicEnumItems")" description="@L("DynamicEnumItemsHeaderInfo")">
+                     <button id="ExportToExcelButton" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> @L("ExportToExcel")</button>
+            
+                     @if (IsGranted(AppPermissions.Pages_DynamicEnumItems_Create))
+                     {
+                         <button id="CreateNewDynamicEnumItemButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewDynamicEnumItem")</button>                
+                     }
+                </abp-page-subheader>
+            
+<div class="@(await GetContainerClass())">   
+    <div class="card card-custom gutter-b">
+        <div class="card-body">
+            <div class="form">
+                <div class="row align-items-center mb-4">
+                    <div class="col-xl-12">
+                        <div class="form-group align-items-center">
+                            <div class="input-group">
+                                <input type="text" id="DynamicEnumItemsTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                <span class="input-group-btn">
+                                    <button id="GetDynamicEnumItemsButton" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+                <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
+                    <div class="col-md-12">
+						<div class="separator separator-dashed"></div>
+					</div>
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="EnumValueFilterId">@L("EnumValue")</label>
+									<input type="text" class="form-control" name="enumValueFilter" id="EnumValueFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="ParentIdFilterId">@L("ParentId")</label>
+									<input type="text" class="form-control" name="parentIdFilter" id="ParentIdFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<label for="IsAuthRestrictionFilterId">@L("IsAuthRestriction")</label>
+								<select class="form-control" name="IsAuthRestrictionFilter" id="IsAuthRestrictionFilterId">
+									<option value="-1">@L("All")</option>
+									<option value="0">@L("False")</option>
+									<option value="1">@L("True")</option>
+								</select>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="AuthorizedUsersFilterId">@L("AuthorizedUsers")</label>
+									<input type="text" class="form-control" name="authorizedUsersFilter" id="AuthorizedUsersFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DynamicEnumNameFilterId">(@L("DynamicEnum")) @L("Name")</label>
+									<input type="text" class="form-control" name="dynamicEnumNameFilter" id="DynamicEnumNameFilterId">
+								</div>
+                            </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-xl-12">
+                        <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item"><i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")</span>
+                        <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none"><i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")</span>
+                    </div>
+                </div>
+            <div class="row align-items-center">
+                <table id="DynamicEnumItemsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            
+                            <th>@L("Actions")</th>
+								<th>@L("EnumValue")</th>
+								<th>@L("ParentId")</th>
+								<th>@L("IsAuthRestriction")</th>
+								<th>@L("AuthorizedUsers")</th>
+								<th>@L("DynamicEnumName")</th>
+                            
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

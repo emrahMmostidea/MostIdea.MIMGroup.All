@@ -1,0 +1,40 @@
+﻿
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.DynamicEnumItems
+@model DynamicEnumItemViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="DynamicEnumItemInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("EnumValue") :</h6>
+                @Model.DynamicEnumItem.EnumValue
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ParentId") :</h6>
+                @Model.DynamicEnumItem.ParentId
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("IsAuthRestriction") :</h6>
+                @Model.DynamicEnumItem.IsAuthRestriction
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("AuthorizedUsers") :</h6>
+                @Model.DynamicEnumItem.AuthorizedUsers
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("DynamicEnum")) @L("Name") :</h6>
+                @Model.DynamicEnumName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

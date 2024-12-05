@@ -1,0 +1,66 @@
+﻿
+@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.SalesConsultants
+@model CreateOrEditSalesConsultantModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditSalesConsultant")) : L("CreateNewSalesConsultant")))
+
+<div class="modal-body">
+    <div id="SalesConsultantInformationsTab">
+        <form name="SalesConsultantInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.SalesConsultant.Id" />
+            }
+
+            <div class="form-group m-form__group">
+                <label for="UserName">@L("User")</label>
+                <div class="input-group">
+                    <input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    </div>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="SalesConsultant_SalesConsultantId" value="@Model.SalesConsultant.SalesConsultantId" type="text" name="salesConsultantId" required hidden />
+            }
+            else
+            {
+            <input class="form-control" id="SalesConsultant_SalesConsultantId" value="" type="text" name="salesConsultantId" required hidden />
+            }
+
+            <div class="form-group m-form__group">
+                <label for="UserName2">@L("User")</label>
+                <div class="input-group">
+                    <input class="form-control" id="UserName2" name="userName2" value="@Model.UserName2" type="text" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary blue" id="OpenUser2LookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    </div>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-danger btn-icon" type="button" id="ClearUserName2Button"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="SalesConsultant_DoctorId" value="@Model.SalesConsultant.DoctorId" type="text" name="doctorId" required hidden />
+            }
+            else
+            {
+            <input class="form-control" id="SalesConsultant_DoctorId" value="" type="text" name="doctorId" required hidden />
+            }
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

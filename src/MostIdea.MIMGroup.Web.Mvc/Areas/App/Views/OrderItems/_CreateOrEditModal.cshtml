@@ -1,0 +1,53 @@
+﻿@using MostIdea.MIMGroup.B2B;
+
+@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.OrderItems
+@model CreateOrEditOrderItemModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditOrderItem")) : L("CreateNewOrderItem")))
+
+<div class="modal-body">
+    <div id="OrderItemInformationsTab">
+        <form name="OrderItemInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.OrderItem.Id" />
+            }
+
+            <div class="form-group">
+                <label for="productId">@L("Product")</label>
+                @Html.DropDownList("productId", new SelectList(Model.OrderItemProductList,"Id","DisplayName", (Model.IsEditMode ? Model.OrderItem.ProductId.ToString() : "")),@L("SelectAProduct"), new { @class = "form-control" , @required="required" })
+            </div>
+
+            <div class="form-group">
+                <label for="orderId">@L("Order")</label>
+                @Html.DropDownList("orderId", new SelectList(Model.OrderItemOrderList,"Id","DisplayName", (Model.IsEditMode ? Model.OrderItem.OrderId.ToString() : "")),@L("SelectAOrder"), new { @class = "form-control" , @required="required" })
+            </div>
+
+            <div class="form-group">
+                <label for="OrderItem_Price">@L("Price")</label>
+                <input class="form-control m-input" id="OrderItem_Price" value="@Model.OrderItem.Price.ToString(CultureInfo.InvariantCulture)" type="number" name="price" />
+            </div>
+
+            <div class="form-group">
+                <label for="OrderItem_Amount">@L("Amount")</label>
+                <input class="form-control m-input" id="OrderItem_Amount" value="@Model.OrderItem.Amount.ToString(CultureInfo.InvariantCulture)" type="number" name="amount" />
+            </div>
+
+            @{
+            var selectListStatus = Html.GetEnumSelectList(typeof(OrderItemStatusEnum));
+            foreach (var selectOption in selectListStatus) { selectOption.Text = L("Enum_OrderItemStatusEnum_" + selectOption.Value); }
+            }
+            <div class="form-group m-form__group">
+                <label for="OrderItem_Status">@L("Status")</label>
+                <select class="form-control m-input m-input--square" name="status" id="OrderItem_Status" asp-for="@Model.OrderItem.Status" asp-items="@selectListStatus">
+                </select>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

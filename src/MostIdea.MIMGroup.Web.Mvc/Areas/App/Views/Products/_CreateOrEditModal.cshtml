@@ -1,0 +1,94 @@
+﻿@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Layout
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Products
+@model CreateOrEditProductModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditProduct")) : L("CreateNewProduct")))
+
+<div class="modal-body">
+    <div id="ProductInformationsTab">
+        <form name="ProductInformationsForm" role="form" novalidate class="form-validation">
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.Product.Id" />
+            }
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="productCategoryId">@L("ProductCategory")</label>
+                                @Html.DropDownList("productCategoryId", new SelectList(Model.ProductProductCategoryList, "Id", "DisplayName", (Model.IsEditMode ? Model.Product.ProductCategoryId.ToString() : "")), @L("SelectAProductCategory"), new { @class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Product_Name">@L("Name")</label>
+                                <input class="form-control" id="Product_Name" value="@Model.Product.Name" type="text" name="name" required maxlength="@MostIdea.MIMGroup.B2B.ProductConsts.MaxNameLength" minlength="@MostIdea.MIMGroup.B2B.ProductConsts.MinNameLength" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="image-input image-input-outline imageUploader" id="imageUploader">
+                        <div class="image-input-wrapper" style="background-image: url(assets/media/users/100_1.jpg)"></div>
+
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="Product_Description">@L("Description")</label>
+                        <textarea class="form-control" id="Product_Description" type="text" name="description" maxlength="@MostIdea.MIMGroup.B2B.ProductConsts.MaxDescriptionLength" minlength="@MostIdea.MIMGroup.B2B.ProductConsts.MinDescriptionLength">
+                            @Model.Product.Description</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Product_Price">@L("Price")</label>
+                        <input class="form-control" id="Product_Price" value="@Model.Product.Price" type="text" name="price" required />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="taxRateId">@L("TaxRate")</label>
+                        @Html.DropDownList("taxRateId", new SelectList(Model.ProductTaxRateList, "Id", "DisplayName", (Model.IsEditMode ? Model.Product.TaxRateId.ToString() : "")), @L("SelectATaxRate"), new { @class = "form-control", @required = "required" })
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Product_Quantity">@L("Quantity")</label>
+                        <input class="form-control m-input" id="Product_Quantity" value="@Model.Product.Quantity.ToString(CultureInfo.InvariantCulture)" type="number" name="quantity" />
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+
+@section Scripts{
+<script>
+     var imageUploader = new KTImageInput('imageUploader');
+    console.log(imageUploader);
+</script>
+}

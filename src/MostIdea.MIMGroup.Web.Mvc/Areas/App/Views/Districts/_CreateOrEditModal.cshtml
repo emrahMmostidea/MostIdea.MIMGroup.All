@@ -1,0 +1,32 @@
+﻿
+@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Districts
+@model CreateOrEditDistrictModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditDistrict")) : L("CreateNewDistrict")))
+
+<div class="modal-body">
+    <div id="DistrictInformationsTab">
+        <form name="DistrictInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.District.Id" />
+            }
+
+            <div class="form-group">
+                <label for="cityId">@L("City")</label>
+                @Html.DropDownList("cityId", new SelectList(Model.DistrictCityList,"Id","DisplayName", (Model.IsEditMode ? Model.District.CityId.ToString() : "")),@L("SelectACity"), new { @class = "form-control" , @required="required" })
+            </div>
+
+            <div class="form-group">
+                <label for="District_Name">@L("Name")</label>
+                <input class="form-control" id="District_Name" value="@Model.District.Name" type="text" name="name" required />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

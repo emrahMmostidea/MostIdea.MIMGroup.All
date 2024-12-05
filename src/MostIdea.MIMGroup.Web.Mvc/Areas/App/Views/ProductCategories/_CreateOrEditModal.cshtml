@@ -1,0 +1,42 @@
+﻿
+@using System.Globalization
+@using MostIdea.MIMGroup.Web.Areas.App.Models.Common.Modals
+@using MostIdea.MIMGroup.Web.Areas.App.Models.ProductCategories
+@model CreateOrEditProductCategoryModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditProductCategory")) : L("CreateNewProductCategory")))
+
+<div class="modal-body">
+    <div id="ProductCategoryInformationsTab">
+        <form name="ProductCategoryInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.ProductCategory.Id" />
+            }
+
+            <div class="form-group">
+                <label for="productCategoryId">@L("ProductCategory")</label>
+                @Html.DropDownList("productCategoryId", new SelectList(Model.ProductCategoryProductCategoryList,"Id","DisplayName", (Model.IsEditMode ? Model.ProductCategory.ProductCategoryId.ToString() : "")),@L("SelectAParentProductCategory"), new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label for="brandId">@L("Brand")</label>
+                @Html.DropDownList("brandId", new SelectList(Model.ProductCategoryBrandList, "Id", "DisplayName", (Model.IsEditMode ? Model.ProductCategory.BrandId.ToString() : "")), @L("SelectABrand"), new { @class = "form-control", @required = "required" })
+            </div>
+
+            <div class="form-group">
+                <label for="ProductCategory_Name">@L("Name")</label>
+                <input class="form-control" id="ProductCategory_Name" value="@Model.ProductCategory.Name" type="text" name="name" required maxlength="@MostIdea.MIMGroup.B2B.ProductCategoryConsts.MaxNameLength" minlength="@MostIdea.MIMGroup.B2B.ProductCategoryConsts.MinNameLength" />
+            </div>
+
+            <div class="form-group">
+                <label for="ProductCategory_Description">@L("Description")</label>
+                <input class="form-control" id="ProductCategory_Description" value="@Model.ProductCategory.Description" type="text" name="description" maxlength="@MostIdea.MIMGroup.B2B.ProductCategoryConsts.MaxDescriptionLength" minlength="@MostIdea.MIMGroup.B2B.ProductCategoryConsts.MinDescriptionLength" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
