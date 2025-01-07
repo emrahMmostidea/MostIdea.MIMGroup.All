@@ -254,9 +254,8 @@
         "node_modules/jquery-serializejson/jquery.serializejson.js",
         "node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
         "node_modules/tooltip.js/dist/umd/tooltip.min.js",
-        "node_modules/sticky-js/dist/sticky.min.js",
-        "node_modules/sticky-js/dist/sticky.min.js",
-         
+        "node_modules/sticky-js/dist/sticky.min.js"
+
       ]
     },
     {
