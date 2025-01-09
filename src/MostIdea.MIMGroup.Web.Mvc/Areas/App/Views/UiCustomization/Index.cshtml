@@ -30,7 +30,7 @@
                                 <span class="theme-name">@L(AppConsts.ThemeDefault.ToPascalCase())</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                      @*   <li class="nav-item">
                             <a href="#theme2" class="d-inline-block nav-link @(Model.Theme == AppConsts.Theme2 ? "active" : "")" data-toggle="tab" role="tab">
                                 <img src="@(ApplicationPath)Common/Images/metronic-themes/theme2.png" width="150"/>
                                 <span class="theme-name">@L("Theme_" + AppConsts.Theme2.ToPascalCase())</span>
@@ -89,7 +89,7 @@
                                 <img src="@(ApplicationPath)Common/Images/metronic-themes/theme11.png" width="150"/>
                                 <span class="theme-name">@L("Theme_" + AppConsts.Theme11.ToPascalCase())</span>
                             </a>
-                        </li>
+                        </li> *@
                     </ul>
                     <div class="tab-content">
                         <div id="default" class="tab-pane pt-5 theme-selection @(Model.Theme == AppConsts.ThemeDefault ? "active show" : "")">

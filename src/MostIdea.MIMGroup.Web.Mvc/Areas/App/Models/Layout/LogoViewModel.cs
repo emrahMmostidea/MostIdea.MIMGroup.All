@@ -20,7 +20,8 @@ namespace MostIdea.MIMGroup.Web.Areas.App.Models.Layout
 
             if (LoginInformations?.Tenant?.LogoId == null)
             {
-                return appPath + $"Common/Images/app-logo-on-{logoSkin}.svg";
+                //return appPath + $"Common/Images/app-logo-on-{logoSkin}.svg";
+                return appPath + $"Common/Images/mimlogo.png";
             }
 
             //id parameter is used to prevent caching only.

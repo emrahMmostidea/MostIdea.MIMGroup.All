@@ -10,7 +10,7 @@
         "theme": {
             "base": {
                 "white": "#ffffff",
-                "primary": "#3699FF",
+                "primary": "#703a85",
                 "secondary": "#E5EAEE",
                 "success": "#1BC5BD",
                 "info": "#8950FC",

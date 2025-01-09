@@ -19,7 +19,7 @@ namespace MostIdea.MIMGroup.Web.Views.Shared.Components.AccountLogo
             if (LoginInformations?.Tenant?.LogoId == null)
             {
                 //return appPath + "Common/Images/app-logo-on-" + _skin + ".svg";
-                return appPath + "Common/Images/mimlogo.png";
+                return appPath + "Common/Images/1726521056_mim-logo-white.png";
             }
 
             return appPath + "TenantCustomization/GetLogo?tenantId=" + LoginInformations?.Tenant?.Id;

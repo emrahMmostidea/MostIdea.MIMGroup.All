@@ -58,34 +58,31 @@
     <!-- begin:: Page -->
     <div class="d-flex flex-column flex-root">
         <div class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid" id="kt_login">
-            <!--begin::Aside (Left Side)-->
-            <div class="login-aside d-flex flex-column flex-row-auto" style="
-                width: 70%;
-                background-color: #3A424D; /* Gri arka plan */
-                background-image: url('/metronic/assets/media/svg/illustrations/home-services-bg.png');
-                background-size: cover;
-                background-position: center top; /* Arka plan yukarı taşındı */
-            ">
-                <!--begin::Aside Content-->
-                <div class="d-flex flex-column justify-content-between vh-100 p-5">
-                    <!-- Logo -->
-                    <div class="text-center">
-                        <a href="#" class="mb-10">
-                            <vc:account-logo skin="dark" style="width: 150px; height: auto;"></vc:account-logo>
-                            <!-- Logonun genişliği artırıldı -->
-                        </a>
-                    </div>
-                    <!-- Footer -->
-                    <div class="text-center">
-                        <h3 class="font-weight-bolder text-white font-size-h4 font-size-h1-lg">
-                            Most Idea Yazılım <br /> B2B Çözümleri
-                        </h3>
-                    </div>
+            <!--begin::Aside-->
+            <div class="login-aside d-flex flex-column flex-row-auto justify-content-between vh-100" style="
+            background-color: #3A424D;
+            background-image: url('/metronic/assets/media/svg/illustrations/home-services-bg.png');
+            background-size: cover;
+            background-position: center;
+        ">
+                <!-- Logo -->
+                <div class="d-flex justify-content-center" style="flex-grow: 1; margin-top:85px">
+                    <a href="#" class="mb-10">
+                        <vc:account-logo skin="dark" style="width: 300px; height: auto;"></vc:account-logo>
+                    </a>
                 </div>
-                <!--end::Aside Content-->
+
+                <!-- Footer -->
+                <div class="d-flex justify-content-center align-items-center p-5" style="
+                background-color: rgba(0, 0, 0, 0.7); /* Hafif siyah arka plan */
+                color: white;
+            ">
+                    <h3 class="font-weight-bolder text-center font-size-h4 font-size-h5-lg">
+                        Most Idea Yazılım B2B Çözümleri
+                    </h3>
+                </div>
             </div>
             <!--end::Aside-->
-
             <!--begin::Content (Right Side)-->
             <div class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
                 <div class="d-flex flex-column-fluid flex-center">
@@ -93,9 +90,9 @@
                         <div class="pb-13 pt-lg-0 pt-5">
                             @if (!(ViewBag.DisableTenantChange ?? false) && MultiTenancyConfig.IsEnabled && !WebUrlService.SupportsTenancyNameInUrl)
                             {
-                                    <div class="login__signup-label tenant-change-box">
-                                        <vc:tenant-change></vc:tenant-change>
-                                    </div>
+                                <div class="login__signup-label tenant-change-box">
+                                    <vc:tenant-change></vc:tenant-change>
+                                </div>
                             }
                         </div>
                         @RenderBody()
@@ -108,6 +105,7 @@
             <!--end::Content-->
         </div>
     </div>
+
     <!--begin::Base Scripts -->
     <script abp-src="/view-resources/Areas/App/Views/_Bundles/account-layout-libs.js" asp-append-version="true"></script>
     <script src="~/AbpServiceProxies/GetAll?v=@(AppTimes.StartupTime.Ticks)" type="text/javascript"></script>
