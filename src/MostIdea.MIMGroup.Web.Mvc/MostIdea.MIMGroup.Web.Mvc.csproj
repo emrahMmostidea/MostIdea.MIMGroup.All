@@ -48,6 +48,7 @@
     <None Include="node_modules\datatables.net\js\dataTables.min.mjs" />
     <None Include="node_modules\datatables.net\js\dataTables.mjs" />
     <None Include="node_modules\datatables.net\js\jquery.dataTables.js" />
+    <None Include="node_modules\datatables.net\js\jquery.dataTables.min.js" />
     <None Include="wwwroot\Plugins\.gitkeep" />
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
